@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./Player.css";
 import back_arrow_icon from "../../assets/back_arrow_icon.png";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Player = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
   const [apiData, setApiData] = useState({
     name: "",
     key: "",
@@ -21,7 +25,7 @@ const Player = () => {
 
   useEffect(() => {
     fetch(
-      "https://api.themoviedb.org/3/movie/552524/videos?language=en-US",
+      `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`,
       options
     )
       .then((res) => res.json())
@@ -31,7 +35,13 @@ const Player = () => {
 
   return (
     <div className="player">
-      <img src={back_arrow_icon} alt="" />
+      <img
+        src={back_arrow_icon}
+        alt=""
+        onClick={() => {
+          navigate(-2);
+        }}
+      />
       <iframe
         width="90%"
         height="90%"
